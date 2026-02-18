@@ -1,0 +1,59 @@
+{
+    "version": "1.6.0",
+    "description": "[Fork] 开源、轻量、全面的 Scoop GUI管理器，该Fork添加了上游尚未实现的多个功能，因过度修改暂不计划PR",
+    "homepage": "https://github.com/Kwensiu/Rscoop",
+    "license": "MIT",
+    "notes": [
+        "Rscoop is a modern GUI for Scoop package manager",
+        "Data is automatically persisted across updates",
+        "Configuration: $dir\\config.json",
+        "Logs: $dir\\logs",
+        "To reset to factory settings: delete config.json and data folder",
+        "For issues: https://github.com/Kwensiu/Rscoop/issues"
+    ],
+    "architecture": {
+        "64bit": {
+            "url": "https://github.com/Kwensiu/Rscoop/releases/download/v1.6.0/Rscoop.exe",
+            "hash": "sha256:dd3031c3e59e6f3158ff66eed056d51830a2d609f07174865f65d7bbd825a861"
+        }
+    },
+    "pre_install": "if (!(Test-Path \"$dir\\data\")) { New-Item -ItemType Directory \"$dir\\data\" }",
+    "installer": {
+        "script": "if (!(Test-Path \"$dir\\logs\")) { New-Item -ItemType Directory \"$dir\\logs\" }"
+    },
+    "post_install": [
+        "Write-Host 'Rscoop installed successfully!' -ForegroundColor Green",
+        "Write-Host 'Data will be persisted in Scoop persist directory' -ForegroundColor Cyan",
+        "Write-Host 'Configuration: $dir\\config.json' -ForegroundColor Yellow",
+        "Write-Host 'Logs: $dir\\logs' -ForegroundColor Yellow"
+    ],
+    "uninstaller": {
+        "script": [
+            "Remove-Item \"$env:APPDATA\\Rscoop\" -Recurse -Force -ErrorAction SilentlyContinue",
+            "Remove-Item \"$env:LOCALAPPDATA\\Rscoop\" -Recurse -Force -ErrorAction SilentlyContinue",
+            "Remove-Item \"HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Run\\Rscoop\" -Force -ErrorAction SilentlyContinue",
+            "Remove-Item \"HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Run\\RscoopSilentStartup\" -Force -ErrorAction SilentlyContinue"
+        ]
+    },
+    "bin": "Rscoop.exe",
+    "persist": [
+        "data",
+        "logs",
+        "config.json"
+    ],
+    "checkver": {
+        "url": "https://api.github.com/repos/Kwensiu/Rscoop/releases/latest",
+        "regex": "\"tag_name\":\\s*\"v([\\d.]+)\""
+    },
+    "autoupdate": {
+        "architecture": {
+            "64bit": {
+                "url": "https://github.com/Kwensiu/Rscoop/releases/download/v$version/Rscoop.exe"
+            }
+        },
+        "hash": {
+            "url": "https://github.com/Kwensiu/Rscoop/releases/download/v$version/Rscoop.exe",
+            "find": "([a-fA-F0-9]{64})"
+        }
+    }
+}
