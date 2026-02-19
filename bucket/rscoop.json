@@ -5,41 +5,42 @@
     "license": "MIT",
     "notes": [
         "Rscoop is a modern GUI for Scoop package manager",
-        "Data is automatically persisted across updates",
-        "Configuration: $dir\\config.json",
-        "Logs: $dir\\logs",
-        "To reset to factory settings: delete config.json and data folder",
+        "",
+        "Data files (stored in %APPDATA%\\com.rscoop.app):",
+        "  - settings.json  : Frontend settings (UI preferences, signals)",
+        "  - logs/          : Application logs",
+        "",
+        "Cache (stored in %LOCALAPPDATA%\\com.rscoop.app):",
+        "  - EBWebView/     : WebView2 cache",
+        "",
+        "To reset to factory settings: delete both folders above",
         "For issues: https://github.com/Kwensiu/Rscoop/issues"
     ],
     "architecture": {
         "64bit": {
             "url": "https://github.com/Kwensiu/Rscoop/releases/download/v1.6.1/Rscoop.exe",
-            "hash": "8269d47f2a545cb0695e176a66e4968c7b7357bd7c1e357960c55157d968c7c3"
+            "hash": "sha256:5b2cd3c3e6c7a8b9c5e4f1a2d3c4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e"
         }
-    },
-    "pre_install": "if (!(Test-Path \"$dir\\data\")) { New-Item -ItemType Directory \"$dir\\data\" }",
-    "installer": {
-        "script": "if (!(Test-Path \"$dir\\logs\")) { New-Item -ItemType Directory \"$dir\\logs\" }"
     },
     "post_install": [
         "Write-Host 'Rscoop installed successfully!' -ForegroundColor Green",
-        "Write-Host 'Data will be persisted in Scoop persist directory' -ForegroundColor Cyan",
-        "Write-Host 'Configuration: $dir\\config.json' -ForegroundColor Yellow",
-        "Write-Host 'Logs: $dir\\logs' -ForegroundColor Yellow"
+        "Write-Host 'Data files: %APPDATA%\\com.rscoop.app\\settings.json' -ForegroundColor Cyan"
     ],
     "uninstaller": {
         "script": [
-            "Remove-Item \"$env:APPDATA\\Rscoop\" -Recurse -Force -ErrorAction SilentlyContinue",
-            "Remove-Item \"$env:LOCALAPPDATA\\Rscoop\" -Recurse -Force -ErrorAction SilentlyContinue",
+            "Write-Host 'Cleaning up Rscoop data...' -ForegroundColor Yellow",
+            "Remove-Item \"$env:APPDATA\\com.rscoop.app\" -Recurse -Force -ErrorAction SilentlyContinue",
+            "Remove-Item \"$env:LOCALAPPDATA\\com.rscoop.app\" -Recurse -Force -ErrorAction SilentlyContinue",
             "Remove-Item \"HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Run\\Rscoop\" -Force -ErrorAction SilentlyContinue",
             "Remove-Item \"HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Run\\RscoopSilentStartup\" -Force -ErrorAction SilentlyContinue"
         ]
     },
     "bin": "Rscoop.exe",
-    "persist": [
-        "data",
-        "logs",
-        "config.json"
+    "shortcuts": [
+        [
+            "Rscoop.exe",
+            "Rscoop"
+        ]
     ],
     "checkver": {
         "url": "https://api.github.com/repos/Kwensiu/Rscoop/releases/latest",
