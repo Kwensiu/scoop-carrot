@@ -19,7 +19,7 @@
     "architecture": {
         "64bit": {
             "url": "https://github.com/Kwensiu/Rscoop/releases/download/v1.6.1/Rscoop.exe",
-            "hash": "sha256:5b2cd3c3e6c7a8b9c5e4f1a2d3c4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e"
+            "hash": "sha256:8269d47f2a545cb0695e176a66e4968c7b7357bd7c1e357960c55157d968c7c3"
         }
     },
     "post_install": [
