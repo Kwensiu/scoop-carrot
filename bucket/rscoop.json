@@ -1,5 +1,5 @@
 {
-    "version": "1.6.1",
+    "version": "1.6.2",
     "description": "[Fork] 开源、轻量、全面的 Scoop GUI管理器，该Fork添加了上游尚未实现的多个功能，因过度修改暂不计划PR",
     "homepage": "https://github.com/Kwensiu/Rscoop",
     "license": "MIT",
@@ -18,8 +18,8 @@
     ],
     "architecture": {
         "64bit": {
-            "url": "https://github.com/Kwensiu/Rscoop/releases/download/v1.6.1/Rscoop.exe",
-            "hash": "sha256:8269d47f2a545cb0695e176a66e4968c7b7357bd7c1e357960c55157d968c7c3"
+            "url": "https://github.com/Kwensiu/Rscoop/releases/download/v1.6.2/Rscoop.exe",
+            "hash": "1c8fd559c3ddca3f3a7600e58143bd74d6eddf7350360a18b87dca22cf50c846"
         }
     },
     "post_install": [
