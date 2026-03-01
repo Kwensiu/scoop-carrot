@@ -31,6 +31,8 @@
             "Write-Host 'Cleaning up Pailer data...' -ForegroundColor Yellow",
             "Remove-Item \"$env:APPDATA\\com.pailer.ks\" -Recurse -Force -ErrorAction SilentlyContinue",
             "Remove-Item \"$env:LOCALAPPDATA\\com.pailer.ks\" -Recurse -Force -ErrorAction SilentlyContinue",
+            "Remove-Item \"HKCU:\\Software\\pailer\" -Recurse -Force -ErrorAction SilentlyContinue",
+            "Remove-Item \"HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Pailer\" -Recurse -Force -ErrorAction SilentlyContinue",
             "Remove-Item \"HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Run\\Pailer\" -Force -ErrorAction SilentlyContinue",
             "Remove-Item \"HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Run\\PailerSilentStartup\" -Force -ErrorAction SilentlyContinue"
         ]
