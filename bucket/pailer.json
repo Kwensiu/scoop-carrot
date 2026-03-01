@@ -1,0 +1,68 @@
+{
+    "version": "1.0.0",
+    "description": "[Fork] 开源、轻量、全面的 Scoop GUI管理器，该Fork添加了上游尚未实现的多个功能，因过度修改暂不计划PR",
+    "homepage": "https://github.com/Kwensiu/Pailer",
+    "license": "MIT",
+    "notes": [
+        "Pailer is a modern GUI for Scoop package manager",
+        "",
+        "Data files (stored in %APPDATA%\\com.pailer.ks):",
+        "  - settings.json  : Frontend settings (UI preferences, signals)",
+        "  - logs/          : Application logs",
+        "",
+        "Cache (stored in %LOCALAPPDATA%\\com.pailer.ks):",
+        "  - EBWebView/     : WebView2 cache",
+        "",
+        "To reset to factory settings: delete both folders above",
+        "For issues: https://github.com/Kwensiu/Pailer/issues"
+    ],
+    "architecture": {
+        "64bit": {
+            "url": "https://github.com/Kwensiu/Pailer/releases/download/v1.0.0/Pailer.exe",
+            "hash": "sha256:5aebbedf5870371eb73b79642d259bdead4dfcbd7a0e9d4c79f5b1e13c2e7e89"
+        }
+    },
+    "post_install": [
+        "Write-Host 'Pailer installed successfully!' -ForegroundColor Green",
+        "Write-Host 'Data files: %APPDATA%\\com.pailer.ks\\settings.json' -ForegroundColor Cyan"
+    ],
+    "uninstaller": {
+        "script": [
+            "Write-Host 'Cleaning up Pailer data...' -ForegroundColor Yellow",
+            "Remove-Item \"$env:APPDATA\\com.pailer.ks\" -Recurse -Force -ErrorAction SilentlyContinue",
+            "Remove-Item \"$env:LOCALAPPDATA\\com.pailer.ks\" -Recurse -Force -ErrorAction SilentlyContinue",
+            "Remove-Item \"HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Run\\Pailer\" -Force -ErrorAction SilentlyContinue",
+            "Remove-Item \"HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Run\\PailerSilentStartup\" -Force -ErrorAction SilentlyContinue"
+        ]
+    },
+    "bin": "Pailer.exe",
+    "shortcuts": [
+        [
+            "Pailer.exe",
+            "Pailer"
+        ]
+    ],
+    "persist": [
+        "%APPDATA%\\com.pailer.ks",
+        "%LOCALAPPDATA%\\com.pailer.ks"
+    ],
+    "checkver": {
+        "url": "https://api.github.com/repos/Kwensiu/Pailer/releases/latest",
+        "regex": "\"tag_name\":\\s*\"v([\\d.]+)\""
+    },
+    "autoupdate": {
+        "persist": [
+            "%APPDATA%\\com.pailer.ks",
+            "%LOCALAPPDATA%\\com.pailer.ks"
+        ],
+        "architecture": {
+            "64bit": {
+                "url": "https://github.com/Kwensiu/Pailer/releases/download/v$version/Pailer.exe"
+            }
+        },
+        "hash": {
+            "url": "https://github.com/Kwensiu/Pailer/releases/download/v$version/Pailer.exe",
+            "find": "([a-fA-F0-9]{64})"
+        }
+    }
+}
