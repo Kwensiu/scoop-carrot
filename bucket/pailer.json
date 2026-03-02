@@ -1,6 +1,6 @@
 {
     "version": "1.1.0",
-    "description": "[Fork] 开源、轻量、全面的 Scoop GUI管理器，该Fork添加了上游尚未实现的多个功能，因过度修改暂不计划PR",
+    "description": "A modern, powerful GUI for Scoop | 为 Scoop 打造的现代化 GUI",
     "homepage": "https://github.com/Kwensiu/Pailer",
     "license": "MIT",
     "notes": [
