@@ -19,7 +19,7 @@
     "architecture": {
         "64bit": {
             "url": "https://github.com/Kwensiu/Pailer/releases/download/v1.1.0/Pailer.exe",
-            "hash": "2014201520162017201820192020202120222023202420252026202720282029"
+            "hash": "75e14415e771b1586ae6055a04ac320b0fa6ac76aa91f3b00ca906630ddf73a7"
         }
     },
     "post_install": [
