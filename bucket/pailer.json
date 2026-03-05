@@ -59,8 +59,7 @@
         ],
         "architecture": {
             "64bit": {
-                "url": "https://github.com/Kwensiu/Pailer/releases/download/v$version/Pailer.exe",
-                "hash": "sha256"
+                "url": "https://github.com/Kwensiu/Pailer/releases/download/v$version/Pailer.exe"
             }
         }
     }
