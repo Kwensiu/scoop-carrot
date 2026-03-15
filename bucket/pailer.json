@@ -29,7 +29,7 @@
         "To reset to factory settings: delete both folders above",
         "For issues: https://github.com/Kwensiu/Pailer/issues"
     ],
-	"persist": "data",
+    "persist": "data",
     "pre_install": [
         "$roaming = \"$env:APPDATA\\com.pailer.ks\"",
         "if (Test-Path $roaming) {",
@@ -54,7 +54,7 @@
             "info 'Pailer specific registry keys were not touched for safety. You can remove them manually if needed.'"
         ]
     },
-	"checkver": "github",
+    "checkver": "github",
     "autoupdate": {
         "architecture": {
             "64bit": {
