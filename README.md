@@ -4,6 +4,7 @@ This is a Scoop Bucket repository, currently only used for storing the following
 
 - [Pailer](https://github.com/Kwensiu/Pailer)
 - [Rscoop-k](https://github.com/Kwensiu/Rscoop)
+- [KeyStats](https://github.com/debugtheworldbot/keyStats)
 
 You can use the following command to add the Bucket:
 
@@ -27,6 +28,7 @@ scoop install carrot/pailer
 
 - [Pailer](https://github.com/Kwensiu/Pailer)
 - [Rscoop-k](https://github.com/Kwensiu/Rscoop)
+- [KeyStats](https://github.com/debugtheworldbot/keyStats)
 
 你可以使用以下命令添加该 Bucket：
 
