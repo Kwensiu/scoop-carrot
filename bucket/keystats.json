@@ -1,0 +1,37 @@
+{
+  "version": "1.40",
+  "description": "Keyboard & Mouse Stats for macOS/Windows",
+  "homepage": "https://github.com/debugtheworldbot/keyStats",
+  "license": "MIT",
+  "url": "https://github.com/debugtheworldbot/keyStats/releases/download/v1.40/KeyStats-Windows-1.40.zip",
+  "hash": "f942995021ba9d63025fed379e8b8ff029c2c3c94f00d5afa01244f20fab0ef4",
+  "bin": "KeyStats.exe",
+  "shortcuts": [
+    ["KeyStats.exe", "KeyStats"]
+  ],
+  "checkver": "github",
+  "autoupdate": {
+    "url": "https://github.com/debugtheworldbot/keyStats/releases/download/v$version/KeyStats-Windows-$version.zip"
+  },
+  "persist": "userdata",
+  "pre_install": [
+    "$appdata = \"$env:LOCALAPPDATA\\KeyStats\"",
+    "if (Test-Path $appdata) {",
+    "    info \"Moving existing data to persist directory...\"",
+    "    Move-Item -Path $appdata -Destination \"$persist_dir\\userdata\" -Force -ErrorAction SilentlyContinue",
+    "}"
+  ],
+  "post_install": [
+    "$appdata = \"$env:LOCALAPPDATA\\KeyStats\"",
+    "if (!(Test-Path $appdata)) {",
+    "    info \"Creating junction for AppData...\"",
+    "    New-Item -Type Junction -Path $appdata -Target \"$persist_dir\\userdata\" | Out-Null",
+    "}"
+  ],
+  "uninstaller": {
+    "script": [
+        "$appdata = \"$env:LOCALAPPDATA\\KeyStats\"",
+        "if (Test-Path $appdata) { Remove-Item $appdata -Recurse -Force }"
+    ]
+  }
+}
