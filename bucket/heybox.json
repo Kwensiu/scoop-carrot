@@ -1,0 +1,72 @@
+{
+    "version": "1.0.9.219",
+    "description": "小黑盒 (Heybox) - 专业的游戏玩家社区与工具平台",
+    "homepage": "https://www.xiaoheihe.cn/",
+    "license": "Proprietary",
+    "url": "https://macc.max-c.com/heyboxpc/pc/heybox_installer_1.0.9.219.exe#/dl.7z",
+    "hash": "5f32c1fe03eb55b19dad93453e3f0125bd3750ecb2040080442c86f478590c03",
+    "extract_dir": "1.0.9",
+    "bin": "HeyboxApp.exe",
+    "shortcuts": [
+        [
+            "HeyboxApp.exe",
+            "小黑盒"
+        ]
+    ],
+    "persist": [
+        ["appdata", "AppData/Roaming/@heybox-app"],
+        ["local", "AppData/Local/Qingfeng"],
+        ["common", "ProgramData/Qingfeng/heyboxapp"],
+        "logs"
+    ],
+    "pre_install": [
+        "$map = @{",
+        "    \"$env:APPDATA\\@heybox-app\" = \"$persist_dir\\appdata\";",
+        "    \"$env:LOCALAPPDATA\\Qingfeng\" = \"$persist_dir\\local\";",
+        "    \"$env:ProgramData\\Qingfeng\\heyboxapp\" = \"$persist_dir\\common\"",
+        "}",
+        "foreach ($syspath in $map.Keys) {",
+        "    $scoop_persist = $map[$syspath]",
+        "    if (Test-Path $syspath) { Remove-Item $syspath -Recurse -Force -ErrorAction SilentlyContinue }",
+        "    if (!(Test-Path $scoop_persist)) { New-Item $scoop_persist -ItemType Directory -Force | Out-Null }",
+        "    $parent = Split-Path $syspath",
+        "    if (!(Test-Path $parent)) { New-Item $parent -ItemType Directory -Force | Out-Null }",
+        "    New-Item -ItemType Junction -Path $syspath -Target $scoop_persist | Out-Null",
+        "}",
+        "$instdir = $dir.Replace('\\', '\\\\')",
+        "$now = [long]((Get-Date).ToUniversalTime() - [datetime]'1970-01-01').TotalMilliseconds",
+        "\"{\r\n  `\"InstallPath`\": `\"$instdir`\",\r\n  `\"current`\": `\"$version`\",\r\n  `\"asarVersion`\": `\"$version`\",\r\n  `\"last`\": `\"$version`\",\r\n  `\"nextLaunchVersion`\": `\"$version`\",\r\n  `\"LastCheckTime`\": $now\r\n}\" | Set-Content -Path \"$env:ProgramData\\Qingfeng\\heyboxapp\\version.json\" -Encoding UTF8",
+        "$reg_file = \"$dir\\install.reg\"",
+        "@\"",
+        "Windows Registry Editor Version 5.00",
+        "[HKEY_CURRENT_USER\\Software\\Qingfeng\\HeyboxApp]",
+        "\"InstallPath\"=\"$instdir\"",
+        "[HKEY_CURRENT_USER\\Software\\Qingfeng\\HeyboxApp\\version]",
+        "\"current\"=\"$version\"",
+        "\"asarVersion\"=\"$version\"",
+        "\"nextLaunchVersion\"=\"$version\"",
+        "\"LastCheckTime\"=\"$now\"",
+        "[HKEY_CURRENT_USER\\Software\\Classes\\heybox]",
+        "@=\"URL:heybox Protocol\"",
+        "\"URL Protocol\"=\"\"",
+        "[HKEY_CURRENT_USER\\Software\\Classes\\heybox\\shell\\open\\command]",
+        "@=\"\\\"$instdir\\\\HeyboxApp.exe\\\" \\\"%1\\\"\"",
+        "\"@ | Set-Content -Path $reg_file -Encoding Unicode",
+        "reg import $reg_file"
+    ],
+    "pre_uninstall": [
+        "Stop-Process -Name \"HeyboxApp\" -ErrorAction SilentlyContinue",
+        "Remove-Item \"$env:APPDATA\\@heybox-app\" -Force -ErrorAction SilentlyContinue",
+        "Remove-Item \"$env:LOCALAPPDATA\\Qingfeng\" -Force -ErrorAction SilentlyContinue",
+        "Remove-Item \"$env:ProgramData\\Qingfeng\\heyboxapp\" -Force -ErrorAction SilentlyContinue",
+        "reg delete \"HKCU\\Software\\Qingfeng\\HeyboxApp\" /f 2>$null",
+        "reg delete \"HKCU\\Software\\Classes\\heybox\" /f 2>$null"
+    ],
+    "checkver": {
+        "url": "https://www.xiaoheihe.cn/app",
+        "regex": "heybox_installer_([\\d.]+)\\.exe"
+    },
+    "autoupdate": {
+        "url": "https://macc.max-c.com/heyboxpc/pc/heybox_installer_$version.exe#/dl.7z"
+    }
+}
