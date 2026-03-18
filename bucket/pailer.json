@@ -16,44 +16,27 @@
             "Pailer"
         ]
     ],
-    "notes": [
-        "Pailer is a modern GUI for Scoop package manager",
-        "",
-        "Data files (stored in %APPDATA%\\com.pailer.ks):",
-        "  - settings.json  : Frontend settings (UI preferences, signals)",
-        "  - logs/          : Application logs",
-        "",
-        "Cache (stored in %LOCALAPPDATA%\\com.pailer.ks):",
-        "  - EBWebView/     : WebView2 cache",
-        "",
-        "To reset to factory settings: delete both folders above",
-        "For issues: https://github.com/Kwensiu/Pailer/issues"
-    ],
     "persist": "data",
     "pre_install": [
-        "$roaming = \"$env:APPDATA\\com.pailer.ks\"",
-        "if (Test-Path $roaming) {",
-        "    info 'Migrating existing data to persist directory...'",
-        "    if (!(Test-Path \"$persist_dir\\data\")) { New-Item \"$persist_dir\\data\" -ItemType Directory | Out-Null }",
-        "    Move-Item -Path \"$roaming\\*\" -Destination \"$persist_dir\\data\" -Force -ErrorAction SilentlyContinue",
+        "$appDataPath = \"$env:APPDATA\\com.pailer.ks\"",
+        "$persistPath = \"$persist_dir\\data\"",
+        "if (!(Test-Path $persistPath)) { New-Item -Path $persistPath -ItemType Directory -Force | Out-Null }",
+        "if (Test-Path $appDataPath) {",
+            "if ((Get-Item $appDataPath).Attributes -notmatch 'ReparsePoint') {",
+                "info \"Moving existing data from $appDataPath to $persistPath\"",
+                "Move-Item -Path \"$appDataPath\\*\" -Destination $persistPath -Force -ErrorAction SilentlyContinue",
+                "Remove-Item $appDataPath -Recurse -Force -ErrorAction SilentlyContinue",
+            "}",
         "}"
     ],
     "post_install": [
-        "$roaming = \"$env:APPDATA\\com.pailer.ks\"",
-        "if (!(Test-Path $roaming)) {",
-        "    info 'Linking AppData (Roaming) for persistence...'",
-        "    New-Item -Type Junction -Path $roaming -Target \"$persist_dir\\data\" | Out-Null",
+        "$appDataPath = \"$env:APPDATA\\com.pailer.ks\"",
+        "$persistPath = \"$persist_dir\\data\"",
+        "if (!(Test-Path $appDataPath)) {",
+            "info \"Creating junction from $appDataPath to $persistPath\"",
+            "New-Item -ItemType Junction -Path $appDataPath -Target $persistPath | Out-Null",
         "}"
     ],
-    "uninstaller": {
-        "script": [
-            "$roaming = \"$env:APPDATA\\com.pailer.ks\"",
-            "$local = \"$env:LOCALAPPDATA\\com.pailer.ks\"",
-            "if (Test-Path $roaming) { Remove-Item $roaming -Recurse -Force -ErrorAction SilentlyContinue }",
-            "if (Test-Path $local) { Remove-Item $local -Recurse -Force -ErrorAction SilentlyContinue }",
-            "info 'Pailer specific registry keys were not touched for safety. You can remove them manually if needed.'"
-        ]
-    },
     "checkver": "github",
     "autoupdate": {
         "architecture": {
