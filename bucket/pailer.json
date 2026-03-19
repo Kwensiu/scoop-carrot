@@ -1,12 +1,12 @@
 {
-    "version": "1.3.1",
+    "version": "1.4.0",
     "description": "A modern, powerful GUI for Scoop | 为 Scoop 打造的现代化 GUI",
     "homepage": "https://github.com/Kwensiu/Pailer",
     "license": "MIT",
     "architecture": {
         "64bit": {
-            "url": "https://github.com/Kwensiu/Pailer/releases/download/v1.3.1/Pailer.exe",
-            "hash": "8fa75801301b2ff97b6c624837a529ea4743b9249326fa9cee6dffcadc2af936"
+            "url": "https://github.com/Kwensiu/Pailer/releases/download/v1.4.0/Pailer.exe",
+            "hash": "b59867d1a70be931dc45876aa91e595cf56174f138a4dcc6d91eb4b9902b6a9c"
         }
     },
     "bin": "Pailer.exe",
@@ -22,19 +22,19 @@
         "$persistPath = \"$persist_dir\\data\"",
         "if (!(Test-Path $persistPath)) { New-Item -Path $persistPath -ItemType Directory -Force | Out-Null }",
         "if (Test-Path $appDataPath) {",
-            "if ((Get-Item $appDataPath).Attributes -notmatch 'ReparsePoint') {",
-                "info \"Moving existing data from $appDataPath to $persistPath\"",
-                "Move-Item -Path \"$appDataPath\\*\" -Destination $persistPath -Force -ErrorAction SilentlyContinue",
-                "Remove-Item $appDataPath -Recurse -Force -ErrorAction SilentlyContinue",
-            "}",
+        "if ((Get-Item $appDataPath).Attributes -notmatch 'ReparsePoint') {",
+        "info \"Moving existing data from $appDataPath to $persistPath\"",
+        "Move-Item -Path \"$appDataPath\\*\" -Destination $persistPath -Force -ErrorAction SilentlyContinue",
+        "Remove-Item $appDataPath -Recurse -Force -ErrorAction SilentlyContinue",
+        "}",
         "}"
     ],
     "post_install": [
         "$appDataPath = \"$env:APPDATA\\com.pailer.ks\"",
         "$persistPath = \"$persist_dir\\data\"",
         "if (!(Test-Path $appDataPath)) {",
-            "info \"Creating junction from $appDataPath to $persistPath\"",
-            "New-Item -ItemType Junction -Path $appDataPath -Target $persistPath | Out-Null",
+        "info \"Creating junction from $appDataPath to $persistPath\"",
+        "New-Item -ItemType Junction -Path $appDataPath -Target $persistPath | Out-Null",
         "}"
     ],
     "checkver": "github",
