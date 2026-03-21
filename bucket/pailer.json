@@ -1,12 +1,12 @@
 {
-    "version": "1.4.0",
+    "version": "1.5.0",
     "description": "A modern, powerful GUI for Scoop | 为 Scoop 打造的现代化 GUI",
     "homepage": "https://github.com/Kwensiu/Pailer",
     "license": "MIT",
     "architecture": {
         "64bit": {
-            "url": "https://github.com/Kwensiu/Pailer/releases/download/v1.4.0/Pailer.exe",
-            "hash": "b59867d1a70be931dc45876aa91e595cf56174f138a4dcc6d91eb4b9902b6a9c"
+            "url": "https://github.com/Kwensiu/Pailer/releases/download/v1.5.0/Pailer.exe",
+            "hash": "c6f2b2247ff84e43cf07326d95e8c4579921aa6fd51c174a06ce412decadd5d3"
         }
     },
     "bin": "Pailer.exe",
