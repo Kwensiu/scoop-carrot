@@ -1,10 +1,10 @@
 {
-    "version": "1.7.0",
+    "version": "1.7.2",
     "description": "一款无级滚动软件，旨在把浏览器里的中键自动滚动带到整个系统，让你的鼠标拥有丝滑的全局无级滚动",
     "homepage": "https://github.com/CyrilPeng/FlowScroll",
     "license": "GPL-3.0 license",
-    "url": "https://github.com/CyrilPeng/FlowScroll/releases/download/v1.7.0/FlowScroll_Win_v1.7.0.exe#/flowscroll.exe",
-    "hash": "c33942c30d955bd244753ce9b84139a4df4dd2579247f0a549569190c910d94d",
+    "url": "https://github.com/CyrilPeng/FlowScroll/releases/download/v1.7.2/FlowScroll_Win_v1.7.2.exe#/flowscroll.exe",
+    "hash": "fdfaf4a43ad533dcb0cc1dc11ff6d7115677b3fe11212feee0c630fc8d4ca0db",
     "bin": "flowscroll.exe",
     "shortcuts": [
         [
