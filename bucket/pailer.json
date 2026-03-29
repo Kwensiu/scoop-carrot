@@ -1,6 +1,6 @@
 {
     "version": "1.9.0",
-    "description": "A modern, powerful GUI for Scoop | 为 Scoop 打造的现代化 GUI",
+    "description": "A modern, powerful GUI for Scoop",
     "homepage": "https://github.com/Kwensiu/Pailer",
     "license": "MIT",
     "architecture": {
@@ -9,7 +9,26 @@
             "hash": "7444d765c1dd420e17fec32b89bccce8a9558a20bacff7721830029e3eeb401a"
         }
     },
-    "bin": "Pailer.exe",
+    "pre_install": [
+        "$appDataPath = \"$env:APPDATA\\com.pailer.ks\"",
+        "if (Test-Path $appDataPath) {",
+        "    if ((Get-Item $appDataPath).Attributes -notmatch 'ReparsePoint') {",
+        "        $persistPath = \"$persist_dir\\data\"",
+        "        if (!(Test-Path $persistPath)) { New-Item -Path $persistPath -ItemType Directory -Force | Out-Null }",
+        "        info \"Moving existing data from $appDataPath to $persistPath\"",
+        "        Move-Item -Path \"$appDataPath\\*\" -Destination $persistPath -Force -ErrorAction SilentlyContinue",
+        "        Remove-Item $appDataPath -Recurse -Force -ErrorAction SilentlyContinue",
+        "    }",
+        "}",
+        "if (!(Test-Path \"$dir\\data\")) { New-Item -ItemType Directory -Path \"$dir\\data\" | Out-Null }"
+    ],
+    "post_install": [
+        "$appDataPath = \"$env:APPDATA\\com.pailer.ks\"",
+        "if (!(Test-Path $appDataPath)) {",
+        "    info \"Creating junction from $appDataPath to $persist_dir\\data\"",
+        "    New-Item -ItemType Junction -Path $appDataPath -Target \"$persist_dir\\data\" | Out-Null",
+        "}"
+    ],
     "shortcuts": [
         [
             "Pailer.exe",
@@ -17,32 +36,15 @@
         ]
     ],
     "persist": "data",
-    "pre_install": [
-        "$appDataPath = \"$env:APPDATA\\com.pailer.ks\"",
-        "$persistPath = \"$persist_dir\\data\"",
-        "if (!(Test-Path $persistPath)) { New-Item -Path $persistPath -ItemType Directory -Force | Out-Null }",
-        "if (Test-Path $appDataPath) {",
-        "if ((Get-Item $appDataPath).Attributes -notmatch 'ReparsePoint') {",
-        "info \"Moving existing data from $appDataPath to $persistPath\"",
-        "Move-Item -Path \"$appDataPath\\*\" -Destination $persistPath -Force -ErrorAction SilentlyContinue",
-        "Remove-Item $appDataPath -Recurse -Force -ErrorAction SilentlyContinue",
-        "}",
-        "}"
-    ],
-    "post_install": [
-        "$appDataPath = \"$env:APPDATA\\com.pailer.ks\"",
-        "$persistPath = \"$persist_dir\\data\"",
-        "if (!(Test-Path $appDataPath)) {",
-        "info \"Creating junction from $appDataPath to $persistPath\"",
-        "New-Item -ItemType Junction -Path $appDataPath -Target $persistPath | Out-Null",
-        "}"
-    ],
     "checkver": "github",
     "autoupdate": {
         "architecture": {
             "64bit": {
                 "url": "https://github.com/Kwensiu/Pailer/releases/download/v$version/Pailer.exe"
             }
+        },
+        "hash": {
+            "url": "$url.sha256"
         }
     }
 }
