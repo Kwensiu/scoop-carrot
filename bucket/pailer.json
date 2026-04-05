@@ -35,6 +35,7 @@
             "Pailer"
         ]
     ],
+    "bin": "Pailer.exe",
     "persist": "data",
     "checkver": "github",
     "autoupdate": {
