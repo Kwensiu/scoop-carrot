@@ -1,0 +1,60 @@
+{
+    "version": "0.17.2",
+    "description": "A sleek desktop music player and tagger for offline music 🪕. With gapless playback, smart playlists, and a map view! Built with Svelte and Tauri",
+    "homepage": "https://github.com/basharovV/musicat",
+    "license": "MIT",
+    "architecture": {
+        "64bit": {
+            "url": "https://github.com/basharovV/musicat/releases/download/v0.17.2/Musicat_0.17.2_x64-setup.exe",
+            "hash": "c1119d26597a89782bc617ba90d3d5fc4fd82346662884cee8c14b30f7fec95b"
+        }
+    },
+    "pre_install": [
+        "$appdata = \"$env:APPDATA\\Musicat\"",
+        "if (Test-Path $appdata) {",
+        "    $item = Get-Item $appdata -Force",
+        "    if ($item.Attributes -notmatch 'ReparsePoint') {",
+        "        if (!(Test-Path \"$persist_dir\\roaming\")) { New-Item -ItemType Directory -Path \"$persist_dir\\roaming\" -Force | Out-Null }",
+        "        Get-ChildItem -LiteralPath $appdata -Force -ErrorAction SilentlyContinue | Move-Item -Destination \"$persist_dir\\roaming\" -Force -ErrorAction SilentlyContinue",
+        "        Remove-Item -LiteralPath $appdata -Recurse -Force -ErrorAction SilentlyContinue",
+        "    }",
+        "}"
+    ],
+    "installer": {
+        "script": [
+            "$args = @('/S', \"/D=$dir\")",
+            "Start-Process -FilePath \"$dir\\$fname\" -ArgumentList $args -Wait",
+            "Stop-Process -Name 'Musicat' -ErrorAction SilentlyContinue"
+        ]
+    },
+    "post_install": [
+        "$appdata = \"$env:APPDATA\\Musicat\"",
+        "if (!(Test-Path \"$persist_dir\\roaming\")) { New-Item -ItemType Directory -Path \"$persist_dir\\roaming\" -Force | Out-Null }",
+        "if (!(Test-Path $appdata)) { New-Item -ItemType Junction -Path $appdata -Target \"$persist_dir\\roaming\" | Out-Null }"
+    ],
+    "bin": "Musicat.exe",
+    "shortcuts": [
+        [
+            "Musicat.exe",
+            "Musicat"
+        ]
+    ],
+    "persist": "roaming",
+    "uninstaller": {
+        "script": [
+            "Stop-Process -Name 'Musicat' -ErrorAction SilentlyContinue",
+            "if (Test-Path \"$dir\\uninstall.exe\") { Start-Process -FilePath \"$dir\\uninstall.exe\" -ArgumentList '/S' -Wait }"
+        ]
+    },
+    "checkver": "github",
+    "autoupdate": {
+        "architecture": {
+            "64bit": {
+                "url": "https://github.com/basharovV/musicat/releases/download/v$version/Musicat_$version_x64-setup.exe"
+            }
+        },
+        "hash": {
+            "url": "$url"
+        }
+    }
+}
