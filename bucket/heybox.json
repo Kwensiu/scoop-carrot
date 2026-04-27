@@ -1,11 +1,11 @@
 {
-    "version": "1.0.9.219",
+    "version": "1.4.1.885",
     "description": "小黑盒 (Heybox) - 专业的游戏玩家社区与工具平台",
     "homepage": "https://www.xiaoheihe.cn/",
     "license": "Proprietary",
-    "url": "https://macc.max-c.com/heyboxpc/pc/heybox_installer_1.0.9.219.exe#/dl.7z",
-    "hash": "5f32c1fe03eb55b19dad93453e3f0125bd3750ecb2040080442c86f478590c03",
-    "extract_dir": "1.0.9",
+    "url": "https://macc.max-c.com/heyboxpc/pc/heybox_installer_1.4.1.885.exe#/dl.7z",
+    "hash": "53c80e408a6baec59c54af4203c07b424162bc9e0fcd912da2535fc9300f8487",
+    "extract_dir": "1.4.1",
     "bin": "HeyboxApp.exe",
     "shortcuts": [
         [
@@ -34,17 +34,18 @@
         "    New-Item -ItemType Junction -Path $syspath -Target $scoop_persist | Out-Null",
         "}",
         "$instdir = $dir.Replace('\\', '\\\\')",
+        "$app_version = ($version -split '\\.')[0..2] -join '.'",
         "$now = [long]((Get-Date).ToUniversalTime() - [datetime]'1970-01-01').TotalMilliseconds",
-        "\"{\r\n  `\"InstallPath`\": `\"$instdir`\",\r\n  `\"current`\": `\"$version`\",\r\n  `\"asarVersion`\": `\"$version`\",\r\n  `\"last`\": `\"$version`\",\r\n  `\"nextLaunchVersion`\": `\"$version`\",\r\n  `\"LastCheckTime`\": $now\r\n}\" | Set-Content -Path \"$env:ProgramData\\Qingfeng\\heyboxapp\\version.json\" -Encoding UTF8",
+        "\"{\r\n  `\"InstallPath`\": `\"$instdir`\",\r\n  `\"current`\": `\"$app_version`\",\r\n  `\"asarVersion`\": `\"$app_version`\",\r\n  `\"last`\": `\"$app_version`\",\r\n  `\"nextLaunchVersion`\": `\"$app_version`\",\r\n  `\"LastCheckTime`\": $now\r\n}\" | Set-Content -Path \"$env:ProgramData\\Qingfeng\\heyboxapp\\version.json\" -Encoding UTF8",
         "$reg_file = \"$dir\\install.reg\"",
         "@\"",
         "Windows Registry Editor Version 5.00",
         "[HKEY_CURRENT_USER\\Software\\Qingfeng\\HeyboxApp]",
         "\"InstallPath\"=\"$instdir\"",
         "[HKEY_CURRENT_USER\\Software\\Qingfeng\\HeyboxApp\\version]",
-        "\"current\"=\"$version\"",
-        "\"asarVersion\"=\"$version\"",
-        "\"nextLaunchVersion\"=\"$version\"",
+        "\"current\"=\"$app_version\"",
+        "\"asarVersion\"=\"$app_version\"",
+        "\"nextLaunchVersion\"=\"$app_version\"",
         "\"LastCheckTime\"=\"$now\"",
         "[HKEY_CURRENT_USER\\Software\\Classes\\heybox]",
         "@=\"URL:heybox Protocol\"",
@@ -63,7 +64,8 @@
         "reg delete \"HKCU\\Software\\Classes\\heybox\" /f 2>$null"
     ],
     "checkver": {
-        "url": "https://www.xiaoheihe.cn/app",
+        "url": "https://api.xiaoheihe.cn/heyboxpc/client/get_download_url?os_type=web&version=999.0.3&x_app=heybox_website&x_client_type=web&x_os_type=Windows&hkey=MFN9M76&_time=1777309050&nonce=271D51D41349C09A62AE0DA56CAE7578",
+        "jsonpath": "$.result.download_url",
         "regex": "heybox_installer_([\\d.]+)\\.exe"
     },
     "autoupdate": {
