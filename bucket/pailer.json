@@ -1,12 +1,12 @@
 {
-    "version": "1.14.1",
+    "version": "1.15.0",
     "description": "A modern, powerful GUI for Scoop",
     "homepage": "https://github.com/Kwensiu/Pailer",
     "license": "MIT",
     "architecture": {
         "64bit": {
-            "url": "https://github.com/Kwensiu/Pailer/releases/download/v1.14.1/Pailer.exe",
-            "hash": "9c13a7df4920dfe6eb71b812ae71f69fd0b1032a0f0e19b2c8a374a5503108ad"
+            "url": "https://github.com/Kwensiu/Pailer/releases/download/v1.15.0/Pailer.exe",
+            "hash": "2676bdb7a378f33c02fa7da2b6736a2f7bb6b4c0c0f230af5951e4a136e71fea"
         }
     },
     "pre_install": [
