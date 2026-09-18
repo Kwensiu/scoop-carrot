@@ -1,10 +1,10 @@
 {
-    "version": "2026.911.0-tachyon",
+    "version": "2026.918.0-tachyon",
     "description": "A free-to-win rhythm game. Rhythm is just a click away!",
     "homepage": "https://osu.ppy.sh/",
     "license": "MIT",
-    "url": "https://github.com/ppy/osu/releases/download/2026.911.0-tachyon/osulazer-2026.911.0-tachyon-full.nupkg#/dl.7z",
-    "hash": "5b4abf63984d21afc054e4de8f28fc51f612e2a1bced8d0ac65a271573a99c31",
+    "url": "https://github.com/ppy/osu/releases/download/2026.918.0-tachyon/osulazer-2026.918.0-tachyon-full.nupkg#/dl.7z",
+    "hash": "49c5be2a5862df684e0efa790604a3f62bba45f1c6236aa4fcbc34133bca4286",
     "extract_dir": "lib\\app",
     "pre_install": "Rename-Item -Path $dir/osu!.exe -NewName $dir/osulazer.exe",
     "bin": "osulazer.exe",
